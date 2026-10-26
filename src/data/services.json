@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "name": "Corte de cabello",
+    "description": "Corte de cabello personalizado según el estilo y las preferencias de la clienta.",
+    "duration": 45,
+    "price": 12000,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": 2,
+    "name": "Coloración completa",
+    "description": "Aplicación de color en todo el cabello para renovar o cambiar el tono.",
+    "duration": 120,
+    "price": 35000,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": 3,
+    "name": "Balayage",
+    "description": "Técnica de iluminación que crea reflejos degradados y naturales en el cabello.",
+    "duration": 180,
+    "price": 65000,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": 4,
+    "name": "Brushing",
+    "description": "Secado y peinado profesional para conseguir un acabado suave y con movimiento.",
+    "duration": 45,
+    "price": 10000,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": 5,
+    "name": "Tratamiento de hidratación capilar",
+    "description": "Tratamiento intensivo para mejorar la hidratación, suavidad y apariencia del cabello.",
+    "duration": 60,
+    "price": 18000,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": 6,
+    "name": "Manicura semipermanente",
+    "description": "Preparación de uñas, esmaltado semipermanente y acabado profesional.",
+    "duration": 60,
+    "price": 14000,
+    "category": "Uñas",
+    "available": true
+  },
+  {
+    "id": 7,
+    "name": "Kapping de uñas",
+    "description": "Refuerzo de la uña natural con una capa protectora para mejorar su resistencia.",
+    "duration": 75,
+    "price": 17000,
+    "category": "Uñas",
+    "available": true
+  },
+  {
+    "id": 8,
+    "name": "Pedicura",
+    "description": "Cuidado estético de pies y uñas, con limpieza, limado e hidratación.",
+    "duration": 60,
+    "price": 15000,
+    "category": "Uñas",
+    "available": true
+  },
+  {
+    "id": 9,
+    "name": "Diseño y perfilado de cejas",
+    "description": "Diseño de cejas según las facciones del rostro y perfilado para definir su forma.",
+    "duration": 30,
+    "price": 8000,
+    "category": "Belleza facial",
+    "available": true
+  },
+  {
+    "id": 10,
+    "name": "Lifting de pestañas",
+    "description": "Tratamiento para elevar y curvar las pestañas naturales, realzando la mirada.",
+    "duration": 60,
+    "price": 16000,
+    "category": "Belleza facial",
+    "available": true
+  },
+  {
+    "id": 11,
+    "name": "Limpieza facial profunda",
+    "description": "Tratamiento facial que incluye limpieza, exfoliación y extracción según las necesidades de la piel.",
+    "duration": 75,
+    "price": 22000,
+    "category": "Spa y estética",
+    "available": true
+  },
+  {
+    "id": 12,
+    "name": "Tratamiento facial hidratante",
+    "description": "Rutina facial orientada a hidratar la piel y mejorar su aspecto y suavidad.",
+    "duration": 60,
+    "price": 20000,
+    "category": "Spa y estética",
+    "available": true
+  },
+  {
+    "id": 13,
+    "name": "Masaje relajante",
+    "description": "Masaje corporal destinado a favorecer la relajación y aliviar la tensión muscular cotidiana.",
+    "duration": 60,
+    "price": 25000,
+    "category": "Spa y estética",
+    "available": true
+  },
+  {
+    "id": 14,
+    "name": "Masaje con piedras calientes",
+    "description": "Masaje relajante que incorpora piedras calientes para brindar una experiencia de bienestar.",
+    "duration": 75,
+    "price": 32000,
+    "category": "Spa y estética",
+    "available": true
+  },
+  {
+    "id": 15,
+    "name": "Exfoliación corporal",
+    "description": "Tratamiento corporal que exfolia la piel y finaliza con la aplicación de una crema hidratante.",
+    "duration": 45,
+    "price": 22000,
+    "category": "Spa y estética",
+    "available": true
+  },
+  {
+    "id": 16,
+    "name": "Maquillaje social",
+    "description": "Maquillaje profesional personalizado para eventos, celebraciones y ocasiones especiales.",
+    "duration": 60,
+    "price": 25000,
+    "category": "Maquillaje",
+    "available": true
+  },
+  {
+    "id": 17,
+    "name": "Maquillaje para eventos",
+    "description": "Maquillaje de larga duración con preparación de la piel y acabado adaptado al evento.",
+    "duration": 90,
+    "price": 35000,
+    "category": "Maquillaje",
+    "available": true
+  },
+  {
+    "id": 18,
+    "name": "Depilación facial",
+    "description": "Eliminación del vello facial con una técnica adecuada para la zona a tratar.",
+    "duration": 20,
+    "price": 6000,
+    "category": "Depilación",
+    "available": true
+  },
+  {
+    "id": 19,
+    "name": "Depilación de piernas completas",
+    "description": "Servicio de depilación de ambas piernas.",
+    "duration": 45,
+    "price": 14000,
+    "category": "Depilación",
+    "available": true
+  }
+]
