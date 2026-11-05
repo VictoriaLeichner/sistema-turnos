@@ -18,50 +18,86 @@ export default class ServiceManager {
     await writeFile(this.databasePath, JSON.stringify(services, null, 2));
   }
 
-  async getServices() {
+  async getServices(filters = {}) {
     try {
       const data = await readFile(this.databasePath, "utf-8");
-      return JSON.parse(data);
+      let services = JSON.parse(data);
+
+      const { category, available } = filters;
+
+      if (category) {
+        services = services.filter(
+          (service) =>
+            service.category.toLowerCase() === category.toLowerCase(),
+        );
+      }
+
+      if (available !== undefined) {
+        services = services.filter(
+          (service) => service.available === (available === "true"),
+        );
+      }
+
+      return services;
     } catch (error) {
-      throw new Error(
-        `No se pudieron obtener los servicios: ${error.message}`,
-      );
+      throw new Error(`No se pudieron obtener los servicios: ${error.message}`);
     }
   }
 
   async getServiceById(idService) {
     const data = await this.getServices();
-    return data.find((service) => service.id === Number(idService)) ?? null;
+
+    const service = data.find((service) => service.id === Number(idService));
+
+    return service ?? null;
   }
 
   async addService(serviceData) {
-    // Validar que estén presentes todos los campos obligatorios
     for (const field of REQUIRED_FIELDS) {
       if (serviceData[field] === undefined || serviceData[field] === null) {
-        throw new Error(`El campo ${field} es obligatorio.`);
+        const error = new Error(`El campo ${field} es obligatorio.`);
+        error.statusCode = 400;
+        throw error;
       }
     }
 
-    // Obtener los servicios existentes
     const data = await this.getServices();
 
-    // Generar automáticamente el próximo ID
-    const id =
+    const newId =
       data.length > 0
-        ? Math.max(...data.map((service) => service.id)) + 1
+        ? Math.max(...data.map((serviceData) => serviceData.id)) + 1
         : 1;
 
-    // Crear el nuevo servicio sin permitir que se imponga un ID externo
     const { id: ignoredId, ...serviceFields } = serviceData;
-    const newService = { id, ...serviceFields };
+
+    const newService = {
+      id: newId,
+      ...serviceFields,
+    };
 
     data.push(newService);
+
     await this.#save(data);
 
-    return { payload: newService, status: "Ok" };
+    return {
+      payload: newService,
+      status: "Ok",
+    };
   }
 
   async updateService(idService, updatedServiceData) {
+    //Valida campos obligatorios
+    for (const field of REQUIRED_FIELDS) {
+      if (
+        updatedServiceData[field] === undefined ||
+        updatedServiceData[field] === null
+      ) {
+        const error = new Error(`El campo ${field} es obligatorio.`);
+        error.statusCode = 400;
+        throw error;
+      }
+    }
+
     const services = await this.getServices();
 
     const index = services.findIndex(
@@ -69,29 +105,36 @@ export default class ServiceManager {
     );
 
     if (index === -1) {
-      return { payload: null, status: "NotOk" };
+      return {
+        payload: null,
+        status: "NotOk",
+      };
     }
 
-    const { id, ...dataToUpdate } = updatedServiceData;
+    const { id: ignoredId, ...dataToUpdate } = updatedServiceData;
 
     services[index] = {
-      ...services[index],
+      id: services[index].id,
       ...dataToUpdate,
     };
 
     await this.#save(services);
 
-    return { payload: services[index], status: "ok" };
+    return {
+      payload: services[index],
+      status: "Ok",
+    };
   }
 
   async deleteService(idService) {
     const data = await this.getServices();
     const id = Number(idService);
+
     const filteredData = data.filter((service) => service.id !== id);
 
     if (data.length === filteredData.length) {
       return {
-        payload: idService,
+        payload: null,
         status: "NotOk",
         message: "El servicio no existe.",
       };
@@ -100,7 +143,7 @@ export default class ServiceManager {
     await this.#save(filteredData);
 
     return {
-      payload: idService,
+      payload: id,
       status: "Ok",
       message: "Servicio eliminado correctamente.",
     };

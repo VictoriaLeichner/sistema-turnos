@@ -1,11 +1,10 @@
-
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 
 // 1. Cargar las variables de entorno desde el archivo .env
-dotenv.config();
+config();
 
 // 2. Leer las variables de entorno
-const config = {
+const configuracion = {
   port: Number(process.env.PORT),
   nodeEnv: process.env.NODE_ENV,
 };
@@ -21,4 +20,4 @@ if (!process.env.NODE_ENV) {
   process.exit(1);
 }
 
-export default config;
+export default configuracion;

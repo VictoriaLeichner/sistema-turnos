@@ -169,5 +169,23 @@
     "price": 14000,
     "category": "Depilación",
     "available": true
+  },
+  {
+    "id": 20,
+    "name": "Consulta inicial",
+    "description": "Servicio de ejemplo para probar la API",
+    "duration": 60,
+    "price": 15000,
+    "category": "General",
+    "available": true
+  },
+  {
+    "id": 21,
+    "name": "Consulta inicial",
+    "description": "Servicio de ejemplo para probar la API",
+    "duration": 60,
+    "price": 15000,
+    "category": "General",
+    "available": true
   }
 ]
