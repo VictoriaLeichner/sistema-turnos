@@ -1,23 +1,17 @@
-import { readFile, writeFile } from "node:fs/promises";
 
-const REQUIRED_FIELDS = [
-  "name",
-  "description",
-  "duration",
-  "price",
-  "category",
-  "available",
-];
+import { readFile, writeFile } from "node:fs/promises";
 
 export default class ServiceManager {
   constructor(databasePath) {
     this.databasePath = databasePath;
   }
 
+  // Guarda los servicios actualizados en el archivo JSON.
   async #save(services) {
     await writeFile(this.databasePath, JSON.stringify(services, null, 2));
   }
 
+  // Obtiene los servicios y aplica los filtros recibidos.
   async getServices(filters = {}) {
     try {
       const data = await readFile(this.databasePath, "utf-8");
@@ -25,6 +19,7 @@ export default class ServiceManager {
 
       const { category, available } = filters;
 
+      // Filtrar por categoría.
       if (category) {
         services = services.filter(
           (service) =>
@@ -32,6 +27,7 @@ export default class ServiceManager {
         );
       }
 
+      // Filtrar por disponibilidad.
       if (available !== undefined) {
         services = services.filter(
           (service) => service.available === (available === "true"),
@@ -44,6 +40,7 @@ export default class ServiceManager {
     }
   }
 
+  // Busca un servicio por su ID.
   async getServiceById(idService) {
     const data = await this.getServices();
 
@@ -52,15 +49,8 @@ export default class ServiceManager {
     return service ?? null;
   }
 
+  // Agrega un servicio nuevo con un ID generado automáticamente.
   async addService(serviceData) {
-    for (const field of REQUIRED_FIELDS) {
-      if (serviceData[field] === undefined || serviceData[field] === null) {
-        const error = new Error(`El campo ${field} es obligatorio.`);
-        error.statusCode = 400;
-        throw error;
-      }
-    }
-
     const data = await this.getServices();
 
     const newId =
@@ -68,6 +58,7 @@ export default class ServiceManager {
         ? Math.max(...data.map((serviceData) => serviceData.id)) + 1
         : 1;
 
+    // Evitar que se utilice un ID enviado desde el body.
     const { id: ignoredId, ...serviceFields } = serviceData;
 
     const newService = {
@@ -85,19 +76,8 @@ export default class ServiceManager {
     };
   }
 
+  // Actualiza los datos de un servicio existente.
   async updateService(idService, updatedServiceData) {
-    //Valida campos obligatorios
-    for (const field of REQUIRED_FIELDS) {
-      if (
-        updatedServiceData[field] === undefined ||
-        updatedServiceData[field] === null
-      ) {
-        const error = new Error(`El campo ${field} es obligatorio.`);
-        error.statusCode = 400;
-        throw error;
-      }
-    }
-
     const services = await this.getServices();
 
     const index = services.findIndex(
@@ -111,10 +91,12 @@ export default class ServiceManager {
       };
     }
 
+    // Evitar que se modifique el ID del servicio.
     const { id: ignoredId, ...dataToUpdate } = updatedServiceData;
 
+    // Mantener los datos anteriores y reemplazar solo los recibidos.
     services[index] = {
-      id: services[index].id,
+      ...services[index],
       ...dataToUpdate,
     };
 
@@ -126,6 +108,7 @@ export default class ServiceManager {
     };
   }
 
+  // Elimina un servicio del archivo JSON.
   async deleteService(idService) {
     const data = await this.getServices();
     const id = Number(idService);

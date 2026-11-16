@@ -1,12 +1,13 @@
 
 import { Router } from "express";
 import ServiceManager from "../managers/ServiceManager.js";
+import { validateService } from "../middlewares/validateService.middleware.js";
 
 const router = Router();
 
 const serviceManager = new ServiceManager("./src/data/services.json");
 
-// GET /api/services
+// Obtener todos los servicios, con posibilidad de aplicar filtros.
 router.get("/", async (req, res) => {
   try {
     const filters = req.query;
@@ -25,7 +26,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /api/services/:id
+// Obtener un servicio por su ID.
 router.get("/:sid", async (req, res) => {
   try {
     const idService = req.params.sid;
@@ -51,8 +52,8 @@ router.get("/:sid", async (req, res) => {
   }
 });
 
-// POST /api/services
-router.post("/", async (req, res) => {
+// Crear un nuevo servicio.
+router.post("/", validateService, async (req, res) => {
   try {
     const serviceData = req.body;
 
@@ -69,8 +70,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /api/services/:id
-router.put("/:sid", async (req, res) => {
+// Actualizar un servicio existente.
+router.put("/:sid", validateService, async (req, res) => {
   try {
     const idService = req.params.sid;
     const updatedServiceData = req.body;
@@ -98,7 +99,7 @@ router.put("/:sid", async (req, res) => {
   }
 });
 
-// DELETE /api/services/:id
+// Eliminar un servicio por su ID.
 router.delete("/:sid", async (req, res) => {
   try {
     const idService = req.params.sid;
